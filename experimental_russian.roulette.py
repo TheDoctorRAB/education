@@ -27,9 +27,14 @@ import numpy
 #
 ####### function kill
 # Since the gun is 'fair' the probability of the gun firing is always the same.
+# In other words it is a random sample from a uniform distribution.
 # If the gun goes off, the player dies. 
 ###
-# chamber_size=6
+# size of the chamber determines the probability of the gun firing
+chamber_size=6
+###
+def gunfire(chamber_size)
+# random number generator from uniform distribution
 ####### Assign probabilities
 #      Probability of the gun shooting
 ps=float(1)/6
