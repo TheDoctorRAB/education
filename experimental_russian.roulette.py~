@@ -78,8 +78,7 @@ for j in range(0,2): # number of times to run the game for the statistical base
 		player_kills[i]=player_kills[i]+1
 		print 'kill',
 		print 'game over','\n\n'
-		break
-	    else:
+     	    else:
 		print 'survive',
 		print 'continue','\n'
 #######
