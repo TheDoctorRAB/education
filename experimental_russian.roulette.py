@@ -65,8 +65,9 @@ player_probability=numpy.zeros((number_of_players))
 #
 ####### main loop
 #
-kill=0
+# kill=0
 for j in range(0,2): # number of times to run the game for the statistical base
+    kill=0
     print 'game: ',j+1,'\n\n' 
     while(kill==0): # current game continues if all players survive 
 	for i in range(0,number_of_players):
