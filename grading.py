@@ -33,12 +33,12 @@ from matplotlib.ticker import MultipleLocator
 from random import randint
 from sys import argv
 from scipy import stats
-script,mcnpx_output=argv
+script,score_output=argv
 #######
 #
 ####### open data file
 # column 1 is ID and column 2 is score
-raw_score=numpy.loadtxt('engin110_raw.scores.inp')
+raw_score=numpy.loadtxt(score_output)
 #######
 #
 ####### maximum score
