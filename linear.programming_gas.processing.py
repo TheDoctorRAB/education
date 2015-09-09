@@ -30,6 +30,12 @@ import pylab
 ####### decision variables
 regular_gas_volplot=numpy.zeros(100)
 premium_gas_volplot=numpy.zeros(100)
+#
+regular_gas_productionplot=numpy.zeros(100)
+premium_gas_productionplot=numpy.zeros(100)
+#
+regular_gas_storageplot=numpy.zeros((100,2))
+premium_gas_storageplot=numpy.zeros((100,2))
 #######
 #
 #
@@ -64,7 +70,15 @@ premium_gas_profit=175 #$/ton
 j=0
 for i in range(0,100):
     regular_gas_volplot[i]=j
+    regular_gas_productionplot[i]=j
+    regular_gas_storageplot[i,1]=j
+    premium_gas_storageplot[i,0]=j
+#
     premium_gas_volplot[i]=(float(volume_constraint)/float(premium_gas_volume))-(float(regular_gas_volume)/float(premium_gas_volume))*regular_gas_volplot[i]
+    premium_gas_productionplot[i]=(float(production_time)/float(premium_gas_production_time))-(float(regular_gas_production_time)/float(premium_gas_production_time))*regular_gas_productionplot[i]
+    regular_gas_storageplot[i,0]=regular_gas_storage
+    premium_gas_storageplot[i,1]=premium_gas_storage
+#
     j=j+1
 # end
 #######
@@ -79,7 +93,10 @@ fig,left_axis=plot.subplots()
 title='Gas processing example' 
 xtitle='Regular gas produced [ton/week]'
 ytitle='Premium gas produced [ton/week]'
-line_color='Blue'
+line_color1='Blue'
+line_color2='Red'
+line_color3='Black'
+line_color4='Green'
 ###
 plot.title(title,fontsize=18)
 left_axis.set_xlabel(xtitle,fontsize=16)
@@ -114,7 +131,11 @@ left_axis.grid(which='major',axis='both',linewidth='1.1')
 #       left_axis.grid(which='minor',axis='both')
 ###
 # plot
-left_axis.plot(regular_gas_volplot,premium_gas_volplot,color=line_color,label='Volume constraint')
+left_axis.plot(regular_gas_volplot,premium_gas_volplot,color=line_color1,label='Volume constraint: 7r+11p=77')
+left_axis.plot(regular_gas_productionplot,premium_gas_productionplot,color=line_color2,label='Production constraint: 10r+8p=80')
+left_axis.plot(regular_gas_storageplot[:,0],regular_gas_storageplot[:,1],color=line_color3,label='Regular gas storage: r=9')
+left_axis.plot(premium_gas_storageplot[:,0],premium_gas_storageplot[:,1],color=line_color4,label='Premium gas storage: p=6')
+###
 pylab.legend(loc='upper right')
 plot.get_current_fig_manager().resize(1920,1080)
 plot.show()
