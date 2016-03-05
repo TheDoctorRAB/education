@@ -35,10 +35,7 @@ equipment_failure_data=numpy.zeros((total_equipment_tested,3))
 for i in range(0,total_equipment_tested):
     equipment_failure_data[i,0]=random.randint(0,499)  #equipment ID
     equipment_failure_data[i,1]=random.randint(0,4500) #operating hours
-    if (equipment_failure_data[i,1]<=100) or (equipment_failure_data[i,1]>=4100): #failure determination
-	equipment_failure_data[i,2]=0
-    else:
-	equipment_failure_data[i,2]=random.randint(0,1)
+    equipment_failure_data[i,2]=random.randint(0,1)    #failure determination
 # end if
 # end i
 #
@@ -46,7 +43,7 @@ for i in range(0,total_equipment_tested):
 #
 # write equipment failure data
 #
-numpy.savetxt('equipment.failure.data.csv',equipment_failure_data,fmt='%03d\t%i\t%i',header='ID\thrs\tF')
+numpy.savetxt('equipment.failure.data.out',equipment_failure_data,fmt='%03d\t%i\t%i',header='ID\thrs\tF')
 #
 ########################################################################
 #

@@ -30,7 +30,7 @@ failure_sort=pandas.DataFrame(failure_dataset)
 #######
 #
 sorted_failures=failure_sort.sort([2,1],ascending=[False,True])
-numpy.savetxt('sorted.csv',sorted_failures,fmt='%i',delimiter='\t')
+numpy.savetxt('sorted.data.out',sorted_failures,fmt='%i',delimiter='\t')
 #
 ########################################################################
 #
