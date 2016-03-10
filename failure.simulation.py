@@ -13,7 +13,6 @@
 #
 import numpy
 import random
-from scipy.stats import expon
 #
 ########################################################################
 #
@@ -24,7 +23,8 @@ from scipy.stats import expon
 # total pieces of equipment tested
 #
 total_equipment_tested=random.randint(250,750)
-beta=random.randint(1000,4500)
+eta=random.randint(1000,4500)
+beta=random.uniform(0.25,1.75)
 #
 #######
 #
@@ -35,22 +35,15 @@ equipment_failure_data=numpy.zeros((total_equipment_tested,2))
 # generate failure data
 #
 for i in range(0,total_equipment_tested):
-    equipment_failure_data[i,0]=random.randint(0,999)  #equipment ID
-    equipment_failure_data[i,1]=numpy.random.exponential(beta) #failure time
-#    x=random.random()
-#    y=expon.cdf(equipment_failure_data[i,1],scale=beta)
-#    if(x>y):
-#	equipment_failure_data[i,2]=0
-#    else:
-#	equipment_failure_data[i,2]=1
-# end if
+    equipment_failure_data[i,0]=random.randint(0,999)  #hrs
+    equipment_failure_data[i,1]=1-numpy.exp(-(equipment_failure_data[i,0]/eta)**beta) #Q(t)
 # end i
 #
 #######
 #
 # write equipment failure data
 #
-numpy.savetxt('equipment.failure.data.out',equipment_failure_data,fmt='%03d\t%i',header='ID\thrs')
+numpy.savetxt('equipment.failure.simulation.data.out',equipment_failure_data,fmt='%i\t%.6f',header='hrs\tQ(t)')
 #
 ########################################################################
 #

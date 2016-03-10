@@ -29,7 +29,7 @@ failure_sort=pandas.DataFrame(failure_dataset)
 #
 #######
 #
-sorted_failures=failure_sort.sort([2,1],ascending=[False,True])
+sorted_failures=failure_sort.sort(1,ascending=True)
 numpy.savetxt('sorted.data.out',sorted_failures,fmt='%i',delimiter='\t')
 #
 ########################################################################
