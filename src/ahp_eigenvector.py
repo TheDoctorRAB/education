@@ -18,7 +18,7 @@
 import numpy
 import scipy
 from sys import argv
-script,matrix_data=argv #add a CSV file with email addresses (one on each line) as command line argument
+script,matrix_data=argv
 #
 ########################################################################
 #
@@ -45,7 +45,7 @@ for j in range(0,ahp_index):
 # end j
 #
 for k in range(0,ahp_index):
-    normalized_eigenvector[k]=assoc_eigenvector[k]/eigen_sum	
+    normalized_eigenvector[k]=assoc_eigenvector[k]/eigen_sum
 # end k
 #
 #######
@@ -58,27 +58,27 @@ consistency_index=(max_eigenvalue-ahp_index)/(ahp_index-1)
 #
 # output
 #
-print 'AHP matrix'
-print ahp_matrix
+print ('AHP matrix')
+print (ahp_matrix)
 print
-print 'AHP matrix index: ',ahp_index 
-print
-print
-print 'eigenvalues',eigenvalues
+print ('AHP matrix index: ',ahp_index)
 print
 print
-print 'maximum eigenvalue: ',max_eigenvalue 
+print ('eigenvalues',eigenvalues)
 print
 print
-print 'associated eigenvector' 
-print assoc_eigenvector
+print ('maximum eigenvalue: ',max_eigenvalue)
 print
 print
-print 'normalized eigenvector'
-print normalized_eigenvector
+print ('associated eigenvector')
+print (assoc_eigenvector)
 print
 print
-print 'consistency index: ',consistency_index
+print ('normalized eigenvector')
+print (normalized_eigenvector)
+print
+print
+print ('consistency index: ',consistency_index)
 #
 ahp_data=open('ahp.out','w+')
 ahp_data.write(str.format('AHP index')+'\t'+str.format('%i'%ahp_index)+'\n'+str.format('consistency index')+'\t'+str.format('%.6f'%consistency_index)+'\n'+str.format('maximum eigenvalue')+'\t'+str.format('%.6f'%max_eigenvalue)+'\n\n'+str.format('associated eigenvector')+'\n')
