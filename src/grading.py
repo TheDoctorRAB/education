@@ -9,14 +9,14 @@
 # The maximum score needs to be input at max_score below.
 # The class average and std is computed for the raw scores and the z scores.
 # Then they are sorted.
-# Two plots are produced. 
+# Two plots are produced.
 # (1) A scatter plot of ID v z score.
 # (2) A line plot of pdf v z score.
 # Normally, student scores follow a normal distribution.
 # The average and std for the z scores should be 0 and 1.
 # The pdf plot (2) is plotted to show that the scores follow the normal distribution.
 # As a visual check, a theoretical distribution is calculated and can be plotted.
-# This is also on the same plot as (1) and (2). 
+# This is also on the same plot as (1) and (2).
 #
 # 4 = A
 # 3 = B
@@ -33,8 +33,61 @@ from matplotlib.ticker import MultipleLocator
 from random import randint
 from sys import argv
 from scipy import stats
+import tkinter
+root=tkinter.Tk()
 script,score_output=argv
 #######
+#
+# screen resolution
+#
+###
+#
+# pixels
+#
+width=root.winfo_screenwidth()
+height=root.winfo_screenheight()
+#
+###
+#
+# mm
+#
+width_mm=root.winfo_screenmmwidth()
+height_mm=root.winfo_screenmmheight()
+#
+###
+#
+# in
+#
+width_in=width_mm/25.4
+height_in=height_mm/25.4
+#
+###
+#
+# dpi
+#
+width_dpi=width/width_in
+height_dpi=height/height_in
+#
+dpi_values=(96,120,144,168,192)
+current_dpi=width_dpi
+minimum=1000
+#
+for dval in dpi_values:
+  difference=abs(dval-width_dpi)
+  if difference<minimum:
+    minimum=difference
+    current_dpi=dval
+#
+#######
+#
+# output to screen
+#
+print('width: %i px, height: %i px'%(width,height))
+print('width: %i mm, height: %i mm'%(width_mm,height_mm))
+print('width: %0.f in, height: %0.f in'%(width_in,height_in))
+print('width: %0.f dpi, height: %0.f dpi'%(width_dpi,height_dpi))
+print('size is %0.f %0.f'%(width,height))
+print('current DPI is %0.f' % (current_dpi))
 #
 ####### open data file
 # column 1 is ID and column 2 is score
@@ -42,7 +95,7 @@ raw_score=numpy.loadtxt(score_output)
 #######
 #
 ####### maximum score
-max_score=1000
+max_score=2040
 #######
 #
 ####### normalize the raw scores
@@ -50,7 +103,7 @@ max_score=1000
 # compute class statistics
 class_average=raw_score[:,1].mean()
 class_std=raw_score[:,1].std(ddof=1)
-print 'raw score stats',class_average,class_std
+print ('raw score stats',class_average,class_std)
 ###
 # initialize counter to count the number of students
 i=0
@@ -60,7 +113,7 @@ for line in raw_score:
   i=i+1
   class_size=i
 # end line
-print 'class size',class_size
+print ('class size',class_size)
 ###
 # intialize the z score matrix
 # the last column is for letter grades
@@ -78,7 +131,7 @@ for i in range(0,class_size):
 # verify statistics
 z_score_average=z_score[:,2].mean()
 z_score_std=z_score[:,2].std(ddof=1)
-print 'normal check',z_score_average,z_score_std
+print ('normal check',z_score_average,z_score_std)
 ###
 # assign tentative grades
 # in a Borrelli class, anyone over 90% gets an A
@@ -145,16 +198,16 @@ fig,pdf_axis=plot.subplots()
 id_axis=pdf_axis.twinx()
 ###
 # text
-plot.title('ENGIN110 Spring 2014')
+plot.title('NE585 Fall 2024')
 pdf_axis.set_xlabel('z score')
 pdf_axis.set_ylabel('PDF')
 id_axis.set_ylabel('ID')
 ###
 # axis
 plot.xlim(-3,3)
-pdf_axis.axis(ymin=0,ymax=0.42)
-pdf_axis.xaxis.set_major_locator(MultipleLocator(0.20))
-pdf_axis.xaxis.set_minor_locator(MultipleLocator(0.04))
+pdf_axis.axis(ymin=0,ymax=0.403)
+pdf_axis.xaxis.set_major_locator(MultipleLocator(0.25))
+pdf_axis.xaxis.set_minor_locator(MultipleLocator(0.05))
 pdf_axis.yaxis.set_minor_locator(MultipleLocator(0.01))
 pdf_axis.tick_params(axis='both',which='major',direction='inout',length=7)
 ###
@@ -166,7 +219,7 @@ pdf_axis.grid(which='minor',axis='x')
 pdf_axis.plot(sorted_z_score[:,2],sorted_z_score[:,3])
 ###
 # turn this on to graphically confirm actual distribution is standard normal
-#pdf_axis.plot(sorted_theoretical_z_score[:,1],sorted_theoretical_z_score[:,2],color='red')
+pdf_axis.plot(sorted_theoretical_z_score[:,1],sorted_theoretical_z_score[:,2],color='red')
 ###
 id_axis.plot(sorted_z_score[:,2],sorted_z_score[:,0],linestyle="",marker="o",color='black')
 plot.show()
@@ -174,11 +227,10 @@ plot.show()
 # save
 # this is not currently working for some reason
 ###
-plot.savefig('engin110_normalized.scores.jpg')
-#######
+plot.savefig('grading',dpi=current_dpi)
 #
 ####### write file
-numpy.savetxt('z_score.out',sorted_z_score)
+#numpy.savetxt('z_score.out',sorted_z_score)
 #######
 #
 #
